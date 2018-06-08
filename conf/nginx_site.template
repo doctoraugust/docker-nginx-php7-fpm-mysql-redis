@@ -1,0 +1,18 @@
+
+
+server {
+    listen ${NGINX_HTTP_PORT};
+    listen [::]:${NGINX_HTTP_PORT};
+
+    listen ${NGINX_HTTPS_PORT};
+    listen [::]:${NGINX_HTTPS_PORT};
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name ${NGINX_HOST};
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
