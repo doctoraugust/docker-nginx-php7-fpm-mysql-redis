@@ -47,10 +47,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && rm -rf /tmp/pear
 
-WORKDIR /var/www
+#WORKDIR /var/www
 #RUN mkdir public
 #RUN echo "<?php phpinfo(); " > public/index.php
-RUN echo "<?php phpinfo(); " > index.php
+#RUN echo "<?php phpinfo(); " > index.php
 
 # Add configuration files
 COPY ./conf/php-xdebug-enabled.ini /usr/local/etc/php/conf.d/xdebug-enabled.ini
