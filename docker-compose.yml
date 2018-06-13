@@ -21,7 +21,7 @@ services:
     depends_on:
       - mysql
     build:
-      context: ${PWD}/docker-files/php7/
+      context: ./docker-files/php7/
       dockerfile: Dockerfile
     container_name: php7
     volumes:
