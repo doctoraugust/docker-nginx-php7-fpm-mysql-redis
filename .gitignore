@@ -1,3 +1,2 @@
-mysql/
-storage/
-logs/
+storage/mysql/
+stotage/logs/*.log

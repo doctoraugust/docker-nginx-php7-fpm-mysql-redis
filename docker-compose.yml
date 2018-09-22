@@ -10,7 +10,7 @@ services:
     restart: always
     container_name: mysql
     volumes:
-      - ./logs/mysql:/var/log:rw
+      - ./stotage/logs/mysql:/var/log:rw
       - ./storage/mysql:/var/lib/mysql
     ports:
       - "3307:3306"
