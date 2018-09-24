@@ -6,27 +6,31 @@ services:
     ports:
       - "6380:6379"
   mysql:
-    image: mysql
+    image: mysql:5.7
     restart: always
     container_name: mysql
     volumes:
-      - ./stotage/logs/mysql:/var/log:rw
+      - ./storage/logs/mysql:/var/log:rw
       - ./storage/mysql:/var/lib/mysql
     ports:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-  php7:
-    image: php72-fpm
+  php:
+#    image: php70-fpm
+    image: php56-fpm
+    container_name: php-fpm
     depends_on:
       - mysql
+      - cache
     build:
-      context: ./docker-files/php7/
+#      context: ./docker-files/php7.0/
+      context: ./docker-files/php5.6/
       dockerfile: Dockerfile
-    container_name: php7
     volumes:
       - ./storage/app:/app
-      - ./storage/logs/php7:/var/log:rw
+      - ./storage/logs/php:/var/log:rw
+      - ./conf/php-fpm/logs.conf:/usr/local/etc/php-fpm.d/xx-logs.conf
     ports:
       - "9001:9000"
     links:
@@ -36,15 +40,15 @@ services:
     image: nginx
     container_name: web
     depends_on:
-      - php7
+      - php
     volumes:
       - ./storage/app:/app
       - ./conf/nginx_default.conf:/etc/nginx/conf.d/nginx_default.conf:ro
       - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./storage/logs/web:/var/log:rw
     links:
-      - php7:php7
+      - php:php
     ports:
       - "80:80"
       - "443:443"
     command: /bin/bash -c "nginx -g 'daemon off;'"
-  
