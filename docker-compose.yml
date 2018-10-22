@@ -2,6 +2,7 @@ version: '3'
 services:
   cache:
     image: redis
+    restart: always
     container_name: cache
     ports:
       - "6380:6379"
